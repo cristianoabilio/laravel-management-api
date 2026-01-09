@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class ProjectRequest extends CustomFormRequest
+class RegisterRequest extends CustomFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,9 +20,9 @@ class ProjectRequest extends CustomFormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required' , 'max:255'],
-            'description' => 'nullable' , 'string',
-            'due_date' => 'nullable' , 'date'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:8',
         ];
     }
 }
