@@ -7,6 +7,7 @@ use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
@@ -21,7 +22,7 @@ class TaskController extends Controller
             'success' => true,
             'count' => count($tasks),
             'data' => $tasks
-        ]);
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -36,7 +37,7 @@ class TaskController extends Controller
             'success' => true,
             'message' => 'Task created successfully',
             'data' => $task
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -50,13 +51,13 @@ class TaskController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Task not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'success' => true,
             'data' =>  $task
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -70,7 +71,7 @@ class TaskController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Task not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $task->project_id = $request->project_id;
@@ -83,7 +84,7 @@ class TaskController extends Controller
         return response()->json([
             'message' => 'Task updated successfully',
             'data' => $task
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -97,7 +98,7 @@ class TaskController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Task not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $task->delete();
@@ -105,6 +106,6 @@ class TaskController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Task deleted successfully'
-        ], 204);
+        ], Response::HTTP_NO_CONTENT);
     }
 }

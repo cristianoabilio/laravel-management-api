@@ -7,6 +7,7 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
@@ -21,7 +22,7 @@ class ProjectController extends Controller
             'success' => true,
             'count' => count($projects),
             'data' => $projects
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -36,7 +37,7 @@ class ProjectController extends Controller
             'success' => true,
             'message' => 'Project created successfully',
             'data' => $project
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -50,13 +51,13 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Project not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'success' => true,
             'data' => $project
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -70,7 +71,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Project not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $project->name = $request->name;
@@ -81,7 +82,7 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Project updated successfully',
             'data' => $project
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -95,7 +96,7 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Project not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $project->delete();
@@ -103,6 +104,6 @@ class ProjectController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Project deleted successfully'
-        ], 204);
+        ], Response::HTTP_NO_CONTENT);
     }
 }
