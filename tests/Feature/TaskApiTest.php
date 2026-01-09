@@ -4,13 +4,26 @@ namespace Tests\Feature;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class TaskApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp(); // Always call the parent setUp()
+
+        // Create and set the user as the acting user
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+    }
 
     public function test_a_task_can_be_created()
     {

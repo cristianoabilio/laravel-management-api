@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
+use App\Models\User;
 use Database\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,6 +12,17 @@ use Tests\TestCase;
 class ProjectApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp(); // Always call the parent setUp()
+
+        // Create and set the user as the acting user
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+    }
 
     /**
      * A project can be created.
