@@ -51,7 +51,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'fail',
-            'message' => 'Credentials invalid'
+            'message' => 'Invalid credentials'
         ], Response::HTTP_BAD_REQUEST);
     }
 

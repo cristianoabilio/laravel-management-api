@@ -11,7 +11,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('tasks', TaskController::class);
