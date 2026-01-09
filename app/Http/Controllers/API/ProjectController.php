@@ -13,7 +13,7 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $projects = Project::all();
 
@@ -42,7 +42,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $project = Project::find($id);
 
@@ -62,7 +62,7 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectRequest $request, string $id)
+    public function update(ProjectRequest $request, string $id): JsonResponse
     {
         $project = Project::find($id);
 
@@ -87,7 +87,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $project = Project::find($id);
 
