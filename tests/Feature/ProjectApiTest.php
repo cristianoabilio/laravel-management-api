@@ -56,7 +56,7 @@ class ProjectApiTest extends TestCase
     {
         $project = Project::factory()->create(); // Create a project using a factory
 
-        $response = $this->getJson('/api/projects/' . $project->id);
+        $response = $this->actingAs($this->user)->getJson('/api/projects/' . $project->id);
 
         $response->assertStatus(200)
             ->assertJsonFragment([
