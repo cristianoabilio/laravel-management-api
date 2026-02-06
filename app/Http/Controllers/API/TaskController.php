@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index(): JsonResponse
     {
-        $tasks = Task::with('project')->get();
+        $tasks = Task::with('project')->whereUserId(auth()->id())->get();
 
         return response()->json([
             'success' => true,
@@ -30,7 +30,13 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'project_id' => $request->project_id,
+            'due_date' => $request->due_date,
+            'user_id' => auth()->id(),
+        ];
         $task = Task::create($data);
 
         return response()->json([
@@ -79,6 +85,7 @@ class TaskController extends Controller
         $task->description = $request->description;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
+        $task->user_id = auth()->id();
         $task->save();
 
         return response()->json([

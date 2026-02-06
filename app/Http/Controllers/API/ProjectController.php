@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index(): JsonResponse
     {
-        $projects = Project::all();
+        $projects = Project::whereUserId(auth()->id())->get();
 
         return response()->json([
             'success' => true,
@@ -30,7 +30,13 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $data = [
+            'name' => $request->name,
+            'user_id' => auth()->id(),
+            'due_date' => $request->due_date,
+            'description' => $request->description
+        ];
+
         $project = Project::create($data);
 
         return response()->json([
@@ -77,6 +83,7 @@ class ProjectController extends Controller
         $project->name = $request->name;
         $project->description = $request->description;
         $project->due_date = $request->due_date;
+        $project->user_id = auth()->id();
         $project->save();
 
         return response()->json([
