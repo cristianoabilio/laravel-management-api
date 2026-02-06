@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\TaskController;
 use Illuminate\Http\Request;
@@ -15,4 +16,6 @@ Route::group(['middleware' => 'auth:sanctum', 'throttle:api'], function() {
 
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('tasks', TaskController::class);
+
+    Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('stats');
 });
